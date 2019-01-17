@@ -5,7 +5,7 @@
 		this.textBox = textBox;
 		this.value = "";
 		this.leftHandValue = 0;
-		this.operation = "";
+		this.operation = "+";
 		
 		this.plusEquals = function() {
 			switch (this.operation) {
@@ -31,6 +31,15 @@
 			this.updateTextBox();
 		}
 
+		this.changeOperation = function(op) {
+			console.log("Changing operation to " + op);
+			if (this.operation != "+") {
+				this.clear();
+			}
+			this.plusEquals();
+			this.operation = op;
+		}
+
 		this.updateTextBox = function() {
 			if (this.value == "") {
 				this.textBox.value = this.leftHandValue;
@@ -39,6 +48,12 @@
 			}
 		}
 
+		this.dotPressed = function() {
+			if (!this.value.includes(".")) {
+				this.value += ".";
+				this.updateTextBox();
+			}
+		}
 
 		this.numberPressed = function(num) {
 			this.value += num;
@@ -46,6 +61,9 @@
 		}
 		
 		this.clear = function() {
+			if (this.value == "0") {
+				this.leftHandValue = 0;
+			}
 			this.value = "0";
 			this.updateTextBox();
 		}
@@ -66,6 +84,30 @@
 		var plus = document.getElementById("plus");
 		plus.addEventListener("click", function () {
 			calculator.plusEquals(); 
+		});
+		var minus = document.getElementById("sub");
+		minus.addEventListener("click", function () {
+			console.log("minus clicked");
+			calculator.changeOperation("-"); 
+		});
+		var divide = document.getElementById("div");
+		divide.addEventListener("click", function () {
+			console.log("divide clicked");
+			calculator.changeOperation("/"); 
+		});
+		var mul = document.getElementById("times");
+		mul.addEventListener("click", function () {
+			console.log("times clicked");
+			calculator.changeOperation("*"); 
+		});
+		var clear = document.getElementById("clear");
+		clear.addEventListener("click", function () {
+			console.log("clear clicked");
+			calculator.clear(); 
+		});
+		var dot = document.getElementById("dot");
+		dot.addEventListener("click", function () {
+			calculator.dotPressed();
 		});
 	}
 
